@@ -103,7 +103,8 @@ def solve_global_subproblem(local_models, global_model, lambda1, lambda2, alpha,
         #The group graphical lasso
         for k in range(K):
             fro_reg += torch.norm(global_model.B[k, :, :]**2)
-        objective = penalty + l1_reg + lambda2 * torch.sqrt(fro_reg)
+        fro_reg_eps = 1e-10  # numerical stability: sqrt(0) gives nan gradient at B=0
+        objective = penalty + l1_reg + lambda2 * torch.sqrt(fro_reg + fro_reg_eps)
         objective.backward()
         return objective
     optimizer.step(closure)  # NOTE: updates model in-place
