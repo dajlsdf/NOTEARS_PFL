@@ -230,7 +230,7 @@ def notears_PFL_train(Xs: list,
     # Standardize data and compute empirical covariances
     covs_emp_site=list()
     for ii in range(K):
-        Xss = Xs[ii] - np.mean(Xs[ii], axis=1, keepdims=True)
+        Xss = Xs[ii] - np.mean(Xs[ii], axis=0, keepdims=True)
         covs_emp = compute_empirical_covs2(Xss)
         covs_emp_site.append(covs_emp)
 
